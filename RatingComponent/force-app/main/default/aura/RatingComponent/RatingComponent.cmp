@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="RatingComponentController">
+    <aura:attribute type="Id" name="recordId" />
+    <aura:handler name="init"  value="{!this}" action="{!c.doinit}" />
+    <aura:attribute type="string" name="rating" default="" />
+
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+              <div class="slds-media__body">
+                <span class="card-heading">Customer Rating</span>
+              </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner align-center">
+            <aura:if isTrue="{!empty(v.rating)}">
+                Loading...
+                <aura:set attribute="else">
+                    <img src="{!$Resource.trophys + '/trophy_' + v.rating + '.png'}"/>
+                </aura:set>
+            </aura:if>
+            
+        </div>
+    </article>
+</aura:component>	
