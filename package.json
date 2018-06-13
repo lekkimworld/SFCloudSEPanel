@@ -1,0 +1,17 @@
+{
+  "name": "sfcloudsepanel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mikkel Flindt Heisterberg <lekkim@heisterberg.dk>",
+  "license": "MIT",
+  "dependencies": {
+    "jsforce": "^1.8.4",
+    "odata-client": "^0.6.2",
+    "promise-sequential": "^1.1.1",
+    "sfdx-bulk-helper": "0.0.9"
+  }
+}
