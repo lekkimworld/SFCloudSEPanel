@@ -15,7 +15,7 @@
             <aura:if isTrue="{!empty(v.rating)}">
                 Loading...
                 <aura:set attribute="else">
-                    <img src="{!$Resource.trophys + '/trophy_' + v.rating + '.png'}"/>
+                    <img src="{!$Resource.medals + '/medal_' + v.rating + '.png'}"/>
                 </aura:set>
             </aura:if>
             
