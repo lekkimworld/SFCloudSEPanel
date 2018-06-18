@@ -5,6 +5,7 @@ const commandLineUsage = require('command-line-usage')
 const odata = require('odata-client')
 const jsforce = require('jsforce')
 const sequential = require('promise-sequential')
+const SalesforceDX = require('sfdx-bulk-helper')
 
 // read environment
 require('dotenv').config()
@@ -12,10 +13,11 @@ require('dotenv').config()
 // define CLI options, parse and display error/help if applicable
 const optionDefinitions = [
     {name: 'help', alias: 'h', type: Boolean, description: 'Print this help'},
-    {name: 'delete-only', alias: 'd', type: Boolean, description: 'Delete only? (optional)'}
+    {name: 'username', alias: 'u', type: String, description: 'Username for SFDX (required)'},
+    {name: 'verbose', alias: 'v', type: Boolean, description: 'More verbose output'}
 ]
 const options = commandLineArgs(optionDefinitions, {'argv': process.argv})
-if (options.help) {
+if (options.help || !options.username) {
     console.log(commandLineUsage([
         {'header': 'SF Cloud SE Panel', content: 'Script to ease building and rebuilding the environment.'}, 
         {'header': 'Options', 'optionList': optionDefinitions}
@@ -23,44 +25,55 @@ if (options.help) {
     process.exit(1)
 }
 
+const sfdx = new SalesforceDX(options.username, options.verbose)
+
 const odataService = odata({
     'service': 'http://services.odata.org/V3/Northwind/Northwind.svc', 
     'resources': 'Customers',
     'format': 'json'
 })
-const sfconn = new jsforce.Connection()
-sfconn.login(process.env.SF_USERNAME, `${process.env.SF_PASSWORD}${process.env.SF_SECURITY_TOKEN}`).then((res) => {
+sfdx.ensureOrgConnected().then(() => {
+    return sfdx.executeSFDXCommand(`sfdx force:org:display -u ${options.username}`)
+}).then(data => {
+    const accessToken = data.result.accessToken
+    const instanceUrl = data.result.instanceUrl
+    return Promise.resolve(new jsforce.Connection({
+        instanceUrl, accessToken
+    }))
+}).then(sfconn => {
     return Promise.all([
+        Promise.resolve(sfconn),
         sfconn.query('SELECT Id FROM Account'),
-        sfconn.query('SELECT Id FROM Case'),
-        sfconn.query('SELECT Id FROM Opportunity')
     ])
+
 }).then(responses => {
-    // curryable function to delete each object sequentially to avoid running into 
+    const sfconn = responses[0]
+
+    // curryable function to delete each object sequentially to avoid running into
     // concurrent call limit
     let deleteAll = (response) => (obj) => () => {
         let ids = response.records.map(r => r.Id)
         if (ids && ids.length) return sequential(ids.map(id => () => sfconn.delete(obj, id)))
         return () => Promise.resolve()
     }
-    return sequential([
-        deleteAll(responses[2])('Opportunity'),
-        deleteAll(responses[1])('Case'),
-        deleteAll(responses[0])('Account')
-    ])
-    
-}).then(() => {
-    if (options.hasOwnProperty('delete-only') && options['delete-only']) {
-        process.exit(0)
-    }
-}).then(() => {
     return Promise.all([
+        Promise.resolve(sfconn),
+        sequential([
+            deleteAll(responses[1])('Account')
+        ])
+    ])
+
+}).then((responses) => {
+    const sfconn = responses[0]
+    return Promise.all([
+        Promise.resolve(sfconn),
         odataService.get(),
         sfconn.describe('Account')
     ])
 }).then(responses => {
-    const odataResponse = responses[0]
-    const accountDescribe = responses[1]
+    const sfconn = responses[0]
+    const odataResponse = responses[1]
+    const accountDescribe = responses[2]
 
     // loop fields and see if SAP Customer ID is there
     let hasSAPId = accountDescribe.fields.filter(f => f.name === 'SAP_Customer_ID__c').length == 1
@@ -70,6 +83,8 @@ sfconn.login(process.env.SF_USERNAME, `${process.env.SF_PASSWORD}${process.env.S
     let rating = ['Gold','Silver','Bronze'][Math.floor(Math.random() * 3)]
 
     return sequential(JSON.parse(odataResponse.body).value.map(c => {
+        if (c.CompanyName === 'Chop-suey Chinese') rating = 'Gold'
+        if (c.CompanyName === 'Alfreds Futterkiste') rating = 'Silver'
         let obj = {
             'Name': c.CompanyName,
             'Fax': c.Fax,
@@ -81,6 +96,7 @@ sfconn.login(process.env.SF_USERNAME, `${process.env.SF_PASSWORD}${process.env.S
         }
         if (hasSAPId) obj['SAP_Customer_ID__c'] = c.CustomerID
         if (hasSAPRating) obj['SAP_Customer_Rating__c'] = rating
+        console.log(`${c.CompanyName} has rating: ${rating}`)
 
         return () => {
             return sfconn.insert('Account', obj)
