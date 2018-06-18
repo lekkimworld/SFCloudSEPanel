@@ -1,10 +1,27 @@
+#!/usr/bin/env node
+
+const commandLineArgs = require('command-line-args')
+const commandLineUsage = require('command-line-usage')
 const odata = require('odata-client')
 const jsforce = require('jsforce')
 const sequential = require('promise-sequential')
 
-const SF_USERNAME = 'cloud_se_panel_dx@lekkimworld.com'
-const SF_SECURITY_TOKEN = 'r08t69QVlhGmfzHVllA2ZyKX'
-const SF_PASSWORD = '5^BJ5HevtP$h'
+// read environment
+require('dotenv').config()
+
+// define CLI options, parse and display error/help if applicable
+const optionDefinitions = [
+    {name: 'help', alias: 'h', type: Boolean, description: 'Print this help'},
+    {name: 'delete-only', alias: 'd', type: Boolean, description: 'Delete only? (optional)'}
+]
+const options = commandLineArgs(optionDefinitions, {'argv': process.argv})
+if (options.help) {
+    console.log(commandLineUsage([
+        {'header': 'SF Cloud SE Panel', content: 'Script to ease building and rebuilding the environment.'}, 
+        {'header': 'Options', 'optionList': optionDefinitions}
+    ]))
+    process.exit(1)
+}
 
 const odataService = odata({
     'service': 'http://services.odata.org/V3/Northwind/Northwind.svc', 
@@ -12,7 +29,7 @@ const odataService = odata({
     'format': 'json'
 })
 const sfconn = new jsforce.Connection()
-sfconn.login(SF_USERNAME, `${SF_PASSWORD}${SF_SECURITY_TOKEN}`).then((res) => {
+sfconn.login(process.env.SF_USERNAME, `${process.env.SF_PASSWORD}${process.env.SF_SECURITY_TOKEN}`).then((res) => {
     return Promise.all([
         sfconn.query('SELECT Id FROM Account'),
         sfconn.query('SELECT Id FROM Case'),
@@ -33,6 +50,10 @@ sfconn.login(SF_USERNAME, `${SF_PASSWORD}${SF_SECURITY_TOKEN}`).then((res) => {
     ])
     
 }).then(() => {
+    if (options.hasOwnProperty('delete-only') && options['delete-only']) {
+        process.exit(0)
+    }
+}).then(() => {
     return Promise.all([
         odataService.get(),
         sfconn.describe('Account')
@@ -51,7 +72,6 @@ sfconn.login(SF_USERNAME, `${SF_PASSWORD}${SF_SECURITY_TOKEN}`).then((res) => {
     return sequential(JSON.parse(odataResponse.body).value.map(c => {
         let obj = {
             'Name': c.CompanyName,
-            'Rating': rating,
             'Fax': c.Fax,
             'Phone': c.Phone,
             'BillingStreet': c.Address,
@@ -69,11 +89,3 @@ sfconn.login(SF_USERNAME, `${SF_PASSWORD}${SF_SECURITY_TOKEN}`).then((res) => {
 }).catch(err => {
     console.log(err)
 })
-
-
-
-/*
-.then((response) => {
-    
-})
-*/

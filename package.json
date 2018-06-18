@@ -9,6 +9,9 @@
   "author": "Mikkel Flindt Heisterberg <lekkim@heisterberg.dk>",
   "license": "MIT",
   "dependencies": {
+    "command-line-args": "^5.0.2",
+    "command-line-usage": "^5.0.5",
+    "dotenv": "^6.0.0",
     "jsforce": "^1.8.4",
     "odata-client": "^0.6.2",
     "promise-sequential": "^1.1.1",
