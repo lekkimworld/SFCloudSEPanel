@@ -1,0 +1,272 @@
+[
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 128,
+            "modifiedTime": 1528921359880,
+            "changeTime": 1528921359880,
+            "contentHash": "51d86f3b64a3d9a0048d192f02147b0e9e9594e4",
+            "isWorkspace": false,
+            "isArtifactRoot": true
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 128,
+            "modifiedTime": 1528921359883,
+            "changeTime": 1528921359883,
+            "contentHash": "ae41ed56706e4439a34cda97ac997d7988935c2f",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 192,
+            "modifiedTime": 1528921858022,
+            "changeTime": 1528921858022,
+            "contentHash": "9f5a3b21b78d208e3f676c7eaae9feac171a645a",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1528919868290,
+            "changeTime": 1528919868290,
+            "contentHash": "050ef690f3a19feffebe04004690b2b8cac7fdf2",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 256,
+            "modifiedTime": 1528919956736,
+            "changeTime": 1528919956736,
+            "contentHash": "f85e31a4ba2447852e6f29b95d303a157fbe861a",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.cmp",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.cmp",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 1030,
+            "modifiedTime": 1528958704574,
+            "changeTime": 1528958704574,
+            "contentHash": "b6e6116106a47f01200e5c2e73d520eeb7e4dfeb",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.cmp-meta.xml",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.cmp-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 247,
+            "modifiedTime": 1528919868291,
+            "changeTime": 1528919868291,
+            "contentHash": "e6da39d15b68def3aa164693543ab4c0c1e5348b",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.css",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.css",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 192,
+            "modifiedTime": 1528921227848,
+            "changeTime": 1528921227848,
+            "contentHash": "b83f9d94bb79110521c79bf7f854899d9ec6d69f",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.design",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponent.design",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 67,
+            "modifiedTime": 1528921825965,
+            "changeTime": 1528921825965,
+            "contentHash": "9e4687c51ecb34c82617bda05350354ecd00e659",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponentController.js",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponentController.js",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 408,
+            "modifiedTime": 1528923429220,
+            "changeTime": 1528923429220,
+            "contentHash": "c06642bfa5b7036cd715ebe4ed4e8b5855cf73e9",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponentHelper.js",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/aura/RatingComponent/RatingComponentHelper.js",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 45,
+            "modifiedTime": 1528919868292,
+            "changeTime": 1528919868292,
+            "contentHash": "fa35ebecd73c127729bf311a95b613f711a6f10b",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/classes",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/classes",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 128,
+            "modifiedTime": 1528921888464,
+            "changeTime": 1528921888464,
+            "contentHash": "cadbafa747abc6751a075f191068e8361cb88e7d",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/classes/RatingComponentController.cls",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/classes/RatingComponentController.cls",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 397,
+            "modifiedTime": 1528953001990,
+            "changeTime": 1528953001990,
+            "contentHash": "592d0c3f30921954257dbee036406edba76f3c01",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/classes/RatingComponentController.cls-meta.xml",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/classes/RatingComponentController.cls-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 203,
+            "modifiedTime": 1528921888464,
+            "changeTime": 1528921888464,
+            "contentHash": "edb04f63be973fc69515ea71fd7be8cbb7f177f6",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/staticresources",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/staticresources",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 160,
+            "modifiedTime": 1528958680579,
+            "changeTime": 1528958680579,
+            "contentHash": "fc6d98d23044e86719336a24ee584e96c6a32e5b",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/staticresources/medals.resource-meta.xml",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/staticresources/medals.resource-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 218,
+            "modifiedTime": 1528921558997,
+            "changeTime": 1528958684258,
+            "contentHash": "89d4781fd804649b6bce4de80dc64ee00ed21eb1",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/staticresources/medals.zip",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent/force-app/main/default/staticresources/medals.zip",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 90823,
+            "modifiedTime": 1528958652994,
+            "changeTime": 1528958671793,
+            "contentHash": "af57711c99162d5fe24bb2cb67e3a7edc187bb98",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent",
+        {
+            "state": "n",
+            "sourcePath": "/Users/mheisterberg/Programming/repos/SFCloudSEPanel/RatingComponent",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 288,
+            "modifiedTime": 1528921359881,
+            "changeTime": 1528921359881,
+            "contentHash": "b12313919584842854d6b3ec7d3b56c30f769c53",
+            "isWorkspace": true,
+            "isArtifactRoot": false
+        }
+    ]
+]
