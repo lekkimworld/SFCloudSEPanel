@@ -1,0 +1,29 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef1"
+            },
+            "FirstName": "Mikkel Flindt",
+            "LastName": "Heisterberg",
+            "Phone": "+4526825673",
+            "Salutation": "Mr.",
+            "Title": "Platform SE",
+            "Email": "mheisterberg@salesforce.com",
+            "AccountId": "@AccountRef1"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef2"
+            },
+            "FirstName": "Marc",
+            "LastName": "Benioff",
+            "Phone": "415-901-7000",
+            "Salutation": "Mr.",
+            "Title": "CEO",
+            "AccountId": "@AccountRef1"
+        }
+    ]
+}
