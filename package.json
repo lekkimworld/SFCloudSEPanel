@@ -13,8 +13,8 @@
     "command-line-usage": "^5.0.5",
     "dotenv": "^6.0.0",
     "jsforce": "^1.8.4",
-    "odata-client": "^0.6.2",
+    "odata-client": "^0.6.4",
     "promise-sequential": "^1.1.1",
-    "sfdx-bulk-helper": "0.0.9"
+    "sfdx-bulk-helper": "0.0.10"
   }
 }

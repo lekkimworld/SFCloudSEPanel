@@ -13,7 +13,7 @@ require('dotenv').config()
 // define CLI options, parse and display error/help if applicable
 const optionDefinitions = [
     {name: 'help', alias: 'h', type: Boolean, description: 'Print this help'},
-    {name: 'username', alias: 'u', type: String, description: 'Username for SFDX (required)'},
+    {name: 'username', alias: 'u', type: String, description: 'Username for SFDX (required)', defaultValue: 'myscratch'},
     {name: 'verbose', alias: 'v', type: Boolean, description: 'More verbose output'}
 ]
 const options = commandLineArgs(optionDefinitions, {'argv': process.argv})
@@ -32,9 +32,7 @@ const odataService = odata({
     'resources': 'Customers',
     'format': 'json'
 })
-sfdx.ensureOrgConnected().then(() => {
-    return sfdx.executeSFDXCommand(`sfdx force:org:display -u ${options.username}`)
-}).then(data => {
+sfdx.executeSFDXCommand('force:org:display').then(data => {
     const accessToken = data.result.accessToken
     const instanceUrl = data.result.instanceUrl
     return Promise.resolve(new jsforce.Connection({
@@ -67,24 +65,19 @@ sfdx.ensureOrgConnected().then(() => {
     const sfconn = responses[0]
     return Promise.all([
         Promise.resolve(sfconn),
-        odataService.get(),
-        sfconn.describe('Account')
+        odataService.get()
     ])
 }).then(responses => {
     const sfconn = responses[0]
     const odataResponse = responses[1]
-    const accountDescribe = responses[2]
-
-    // loop fields and see if SAP Customer ID is there
-    let hasSAPId = accountDescribe.fields.filter(f => f.name === 'SAP_Customer_ID__c').length == 1
-    let hasSAPRating = accountDescribe.fields.filter(f => f.name === 'SAP_Customer_Rating__c').length == 1
 
     // calc  rating
-    let rating = ['Gold','Silver','Bronze'][Math.floor(Math.random() * 3)]
+    let rating = ['Hot','Warm','Cold'][Math.floor(Math.random() * 3)]
 
     return sequential(JSON.parse(odataResponse.body).value.map(c => {
-        if (c.CompanyName === 'Chop-suey Chinese') rating = 'Gold'
-        if (c.CompanyName === 'Alfreds Futterkiste') rating = 'Silver'
+        if (c.CompanyName === 'Chop-suey Chinese') rating = 'Hot'
+        if (c.CompanyName === 'Alfreds Futterkiste') rating = 'Warm'
+        if (c.CompanyName === 'Ernst Handel') rating = 'Cold'
         let obj = {
             'Name': c.CompanyName,
             'Fax': c.Fax,
@@ -92,11 +85,16 @@ sfdx.ensureOrgConnected().then(() => {
             'BillingStreet': c.Address,
             'BillingCity': c.City,
             'BillingPostalCode': c.PostalCode,
-            'BillingCountry': c.Country
+            'BillingCountry': c.Country,
+            'Type': 'Customer - Channel',
+            'Website': `https://www.example.com`,
+            'Site': c.Country,
+            'Industry': 'Retail',
+            'AccountNumber': c.CustomerID,
+            'SAP_Customer_ID__c': c.CustomerID,
+            'Rating': rating
         }
-        if (hasSAPId) obj['SAP_Customer_ID__c'] = c.CustomerID
-        if (hasSAPRating) obj['SAP_Customer_Rating__c'] = rating
-        console.log(`${c.CompanyName} has rating: ${rating}`)
+        if (options.verbose) console.log(`${c.CompanyName} has rating: ${rating}`)
 
         return () => {
             return sfconn.insert('Account', obj)

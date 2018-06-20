@@ -1,6 +1,6 @@
 ({
     doinit: function(component, event, helper) {
-        var action = component.get("c.getCustomerRating");
+        var action = component.get("c.getAccountRating");
         action.setParams({
             "recordId": component.get("v.recordId")
         })
