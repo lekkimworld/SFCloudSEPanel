@@ -1,4 +1,4 @@
-sfdx force:org:create -a myscratch -f config/project-scratch-def.json
+sfdx force:org:create -a myscratch -f config/project-scratch-def.json --setdefaultusername
 sfdx l18n:user:set --language en_US -u myscratch
 
 ACCESS_TOKEN=`sfdx force:org:display -u myscratch --json | jq -r ".result.accessToken"`
