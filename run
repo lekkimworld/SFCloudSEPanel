@@ -1,105 +1,42 @@
 #!/usr/bin/env node
-
-const commandLineArgs = require('command-line-args')
-const commandLineUsage = require('command-line-usage')
-const odata = require('odata-client')
-const jsforce = require('jsforce')
 const sequential = require('promise-sequential')
-const SalesforceDX = require('sfdx-bulk-helper')
+const odata = require('odata-client')
+const utils = require('./utils.js')
 
-// read environment
-require('dotenv').config()
-
-// define CLI options, parse and display error/help if applicable
-const optionDefinitions = [
-    {name: 'help', alias: 'h', type: Boolean, description: 'Print this help'},
-    {name: 'username', alias: 'u', type: String, description: 'Username for SFDX (required)', defaultValue: 'myscratch'},
-    {name: 'verbose', alias: 'v', type: Boolean, description: 'More verbose output'}
-]
-const options = commandLineArgs(optionDefinitions, {'argv': process.argv})
-if (options.help || !options.username) {
-    console.log(commandLineUsage([
-        {'header': 'SF Cloud SE Panel', content: 'Script to ease building and rebuilding the environment.'}, 
-        {'header': 'Options', 'optionList': optionDefinitions}
-    ]))
-    process.exit(1)
-}
-
-const sfdx = new SalesforceDX(options.username, options.verbose)
-
+// setup odata source to read customers from
 const odataService = odata({
     'service': 'http://services.odata.org/V3/Northwind/Northwind.svc', 
     'resources': 'Customers',
     'format': 'json'
 })
-sfdx.executeSFDXCommand('force:org:display').then(data => {
-    const accessToken = data.result.accessToken
-    const instanceUrl = data.result.instanceUrl
-    return Promise.resolve(new jsforce.Connection({
-        instanceUrl, accessToken
-    }))
-}).then(sfconn => {
-    return Promise.all([
-        Promise.resolve(sfconn),
-        sfconn.query('SELECT Id FROM Account'),
-    ])
 
-}).then(responses => {
+// ensure command line arguments, that the org is empty and then import data
+utils.ensureCommandLineArguments().then(options => utils.ensureOrgData(options, odataService)).then(responses => {
     const sfconn = responses[0]
+    const odata = responses[1]
 
-    // curryable function to delete each object sequentially to avoid running into
-    // concurrent call limit
-    let deleteAll = (response) => (obj) => () => {
-        let ids = response.records.map(r => r.Id)
-        if (ids && ids.length) return sequential(ids.map(id => () => sfconn.delete(obj, id)))
-        return () => Promise.resolve()
-    }
-    return Promise.all([
-        Promise.resolve(sfconn),
-        sequential([
-            deleteAll(responses[1])('Account')
-        ])
-    ])
-
-}).then((responses) => {
-    const sfconn = responses[0]
-    return Promise.all([
-        Promise.resolve(sfconn),
-        odataService.get()
-    ])
-}).then(responses => {
-    const sfconn = responses[0]
-    const odataResponse = responses[1]
-
-    // calc  rating
-    let rating = ['Hot','Warm','Cold'][Math.floor(Math.random() * 3)]
-
-    return sequential(JSON.parse(odataResponse.body).value.map(c => {
-        if (c.CompanyName === 'Chop-suey Chinese') rating = 'Hot'
-        if (c.CompanyName === 'Alfreds Futterkiste') rating = 'Warm'
-        if (c.CompanyName === 'Ernst Handel') rating = 'Cold'
+    return sequential(odata.map(c => {
+        // map data into Salesforce SObject
         let obj = {
             'Name': c.CompanyName,
-            'Fax': c.Fax,
-            'Phone': c.Phone,
-            'BillingStreet': c.Address,
-            'BillingCity': c.City,
-            'BillingPostalCode': c.PostalCode,
-            'BillingCountry': c.Country,
+            'Fax': c.Fax, 'Phone': c.Phone,
+            'BillingStreet': c.Address, 'BillingCity': c.City, 'BillingPostalCode': c.PostalCode, 'BillingCountry': c.Country,
             'Type': 'Customer - Channel',
             'Website': `https://www.example.com`,
             'Site': c.Country,
             'Industry': 'Retail',
             'AccountNumber': c.CustomerID,
             'SAP_Customer_ID__c': c.CustomerID,
-            'Rating': rating
+            'Rating': c.Rating
         }
-        if (options.verbose) console.log(`${c.CompanyName} has rating: ${rating}`)
-
+        
+        // do insert
         return () => {
             return sfconn.insert('Account', obj)
         }
     }))
+}).then(() => {
+    console.log("Done!")
 }).catch(err => {
     console.log(err)
 })
