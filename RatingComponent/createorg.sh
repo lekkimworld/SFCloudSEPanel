@@ -7,6 +7,7 @@ ACCESS_TOKEN=`sfdx force:org:display -u $USERNAME --json | jq -r ".result.access
 INSTANCE_URL=`sfdx force:org:display -u $USERNAME --json | jq -r ".result.instanceUrl"`
 
 sfdx force:data:tree:import -u $USERNAME -p ./data/Account-Contact-plan.json
+sfdx force:source:push -u $USERNAME
 
 sfdx force:org:open -u $USERNAME --path /lightning/page/home
 
